@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         `;
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-pro", // Fallback to standard stable model
+            model: "gemini-flash-latest", // Reverting to original working alias
             systemInstruction: systemPrompt
         });
 
