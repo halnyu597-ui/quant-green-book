@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { problem_text, user_reasoning, correct_solution } = await req.json();
+        const { problem_text, correct_solution, chat_history } = await req.json();
 
         const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
         console.log("Checking API Key: ", apiKey ? "Present" : "Missing");
@@ -15,12 +15,10 @@ export async function POST(req: Request) {
         }
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
-        const prompt = `
+        const systemPrompt = `
         You are a Quant Interviewer at a top firm. 
         Problem: ${problem_text}
-        Candidate's Reasoning: ${user_reasoning}
         Correct Solution: ${correct_solution}
 
         Task:
@@ -32,7 +30,29 @@ export async function POST(req: Request) {
         6. Keep your response concise (under 100 words) and conversational.
         `;
 
-        const result = await model.generateContent(prompt);
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash", // Switching to specific version for reliable systemInstruction support
+            systemInstruction: systemPrompt
+        });
+
+        // Parse history for Gemini
+        // chat_history from frontend: { role: 'user' | 'assistant', content: string }[]
+        // Gemini expects: { role: 'user' | 'model', parts: [{ text: string }] }[]
+
+        // We separate the last message effectively, as startChat takes history (previous turns)
+        // and we send the new message content.
+
+        const lastMessage = chat_history[chat_history.length - 1];
+        const historyForGemini = chat_history.slice(0, -1).map((msg: any) => ({
+            role: msg.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: msg.content }]
+        }));
+
+        const chat = model.startChat({
+            history: historyForGemini,
+        });
+
+        const result = await chat.sendMessage(lastMessage.content);
         const feedback = result.response.text();
 
         return NextResponse.json({ feedback });

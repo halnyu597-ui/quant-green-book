@@ -119,14 +119,59 @@ export default function QuestionCard({
     const formattedHint = formatMathText(question.hint || "");
     const formattedSolution = formatMathText(question.solution || "");
 
+    // State for Chat History
+    const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'assistant', content: string }[]>([]);
+    const [isInternalJudging, setIsInternalJudging] = useState(false);
+
+    // Reset chat on question change
+    useEffect(() => {
+        setChatHistory([]);
+        setIsInternalJudging(false);
+    }, [question]);
+
+    const handleJudgeSubmit = async () => {
+        if (!userAnswer.trim()) return;
+
+        setIsInternalJudging(true);
+        const userMsg = { role: 'user' as const, content: userAnswer };
+        const updatedHistory = [...chatHistory, userMsg];
+
+        setChatHistory(updatedHistory);
+        setUserAnswer(""); // Clear input after submit
+
+        try {
+            const response = await fetch("/api/judge", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    problem_text: question.problem_text,
+                    correct_solution: question.solution,
+                    chat_history: updatedHistory
+                }),
+            });
+
+            const data = await response.json();
+            if (data.feedback) {
+                setChatHistory(prev => [...prev, { role: 'assistant', content: data.feedback }]);
+            } else if (data.error) {
+                setChatHistory(prev => [...prev, { role: 'assistant', content: `System Error: ${data.error}` }]);
+            }
+        } catch (error) {
+            console.error("Judge Error:", error);
+            setChatHistory(prev => [...prev, { role: 'assistant', content: "Error contacting Judge." }]);
+        } finally {
+            setIsInternalJudging(false);
+        }
+    };
+
     return (
         <div className="perspective-container">
             <div className={`card-inner ${isFlipped ? "card-flipped" : ""}`}>
                 {/* --- FRONT FACE --- */}
                 <div className={`card-face ${!isFlipped ? "card-face-visible" : "card-face-hidden"}`}>
-                    <div className="glass-card animate-fade-in relative overflow-hidden min-h-[400px] flex flex-col">
+                    <div className="glass-card animate-fade-in relative overflow-hidden min-h-[500px] flex flex-col">
                         {/* Header */}
-                        <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-2">
+                        <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-2">
                             <div className="flex items-center gap-4">
                                 <h2 className="text-2xl font-bold text-primary finance-mono">{question.title}</h2>
                                 <button
@@ -152,46 +197,87 @@ export default function QuestionCard({
                         </div>
 
                         {/* Question Text */}
-                        <div className="text-gray-300 leading-relaxed font-mono text-base mb-8">
+                        <div className="text-gray-300 leading-relaxed font-mono text-base mb-6">
                             {/* @ts-expect-error: settings prop exists at runtime but missing in types */}
                             <Latex settings={{ throwOnError: false, trust: true }}>{formattedProblemText || ""}</Latex>
                         </div>
 
-                        {/* User Reasoning */}
-                        <div className="mb-6">
-                            <label className="block text-xs uppercase text-gray-500 mb-2 finance-mono">Your Reasoning</label>
-                            <textarea
-                                value={userAnswer}
-                                onChange={(e) => setUserAnswer(e.target.value)}
-                                style={{ width: '100%', minHeight: '200px', display: 'block' }}
-                                className="w-full min-h-[200px] p-4 text-lg text-white bg-zinc-900 border border-zinc-700 rounded-md focus:ring-2 focus:ring-green-500 font-mono"
-                                placeholder="Type your initial thoughts here..."
-                            />
-                            <div className="flex justify-end mt-4">
-                                <button
-                                    onClick={handleSubmit}
-                                    disabled={isJudging}
-                                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {isJudging ? "ANALYZING..." : "SUBMIT REASONING"}
-                                </button>
+                        {/* Socratic Chat Interface */}
+                        <div className="flex-1 flex flex-col min-h-0">
+                            {/* Chat History */}
+                            <div className="flex-1 overflow-y-auto mb-4 space-y-4 pr-2 max-h-[400px]">
+                                {chatHistory.length === 0 && (
+                                    <div className="text-gray-500 text-sm font-mono italic text-center pt-8">
+                                        State your reasoning. The Socratic Judge will evaluate it.
+                                    </div>
+                                )}
+                                {chatHistory.map((msg, idx) => (
+                                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                        <div className={`max-w-[85%] rounded-lg p-3 text-sm font-mono ${msg.role === 'user'
+                                            ? 'bg-zinc-800 text-gray-200 border border-zinc-700'
+                                            : 'bg-primary/10 border-l-2 border-primary text-gray-200'
+                                            }`}>
+                                            {msg.role === 'assistant' && (
+                                                <span className="font-bold text-primary block text-[10px] mb-1 tracking-wider uppercase">Socratic Judge</span>
+                                            )}
+                                            <div className="whitespace-pre-wrap leading-relaxed">
+                                                {msg.role === 'assistant' ? (
+                                                    /* @ts-expect-error: settings prop exists at runtime but missing in types */
+                                                    <Latex settings={{ throwOnError: false, trust: true }}>{msg.content}</Latex>
+                                                ) : msg.content}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                {isInternalJudging && (
+                                    <div className="flex justify-start">
+                                        <div className="bg-primary/5 border-l-2 border-primary/50 p-3 rounded-r-lg">
+                                            <span className="text-primary text-xs animate-pulse font-mono">Analying reasoning...</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Input Area */}
+                            <div className="mt-auto">
+                                <label className="block text-xs uppercase text-gray-500 mb-2 finance-mono">Your Reasoning</label>
+                                <textarea
+                                    value={userAnswer}
+                                    onChange={(e) => setUserAnswer(e.target.value)}
+                                    // Submit on Ctrl+Enter
+                                    onKeyDown={(e) => {
+                                        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                                            handleJudgeSubmit();
+                                        }
+                                    }}
+                                    className="w-full h-[100px] p-4 text-base text-white bg-zinc-900 border border-zinc-700 rounded-md focus:ring-2 focus:ring-green-500 font-mono resize-none"
+                                    placeholder="Type your thoughts... (Ctrl+Enter to submit)"
+                                />
+                                <div className="flex justify-end gap-3 mt-2">
+                                    <button
+                                        onClick={() => {
+                                            setChatHistory([]);
+                                            setUserAnswer("");
+                                            setIsInternalJudging(false);
+                                        }}
+                                        className="text-xs text-gray-400 hover:text-white transition-colors"
+                                        title="Clear chat history"
+                                    >
+                                        CLEAR CHAT
+                                    </button>
+                                    <button
+                                        onClick={handleJudgeSubmit}
+                                        disabled={isInternalJudging || !userAnswer.trim()}
+                                        className="btn-primary py-2 px-6 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isInternalJudging ? "JUDGING..." : "SUBMIT"}
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Feedback (Between Submit and Hint) */}
-                        {feedback && (
-                            <div className="mt-4 mb-4 animate-fade-in">
-                                <div className="bg-primary/5 border-l-2 border-primary p-5 rounded-r-lg">
-                                    <span className="font-bold text-primary block text-xs mb-2 tracking-wider">SOCRATIC JUDGE</span>
-                                    <div className="text-gray-200 text-sm leading-relaxed whitespace-pre-wrap font-mono">
-                                        {feedback}
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
                         {/* Bottom Navigation Buttons */}
-                        <div className="mt-auto pt-8 flex justify-between w-full border-t border-gray-800/50">
+                        <div className="pt-6 flex justify-between w-full border-t border-gray-800/50 mt-4">
                             {question.hint ? (
                                 <button
                                     onClick={() => setShowHint(!showHint)}
@@ -211,7 +297,7 @@ export default function QuestionCard({
                             </button>
                         </div>
 
-                        {/* Hint Display (Moved Beneath Buttons) */}
+                        {/* Hint Display */}
                         {showHint && question.hint && (
                             <div className="mt-4 animate-fade-in bg-yellow-900/10 border-l-2 border-yellow-500 p-5 rounded-r-lg">
                                 <span className="font-bold text-yellow-500 block text-xs mb-2 tracking-wider">HINT</span>

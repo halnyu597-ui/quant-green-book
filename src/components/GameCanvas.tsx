@@ -18,9 +18,7 @@ export default function GameCanvas() {
     });
     const [currentIndex, setCurrentIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState("");
-    const [feedback, setFeedback] = useState<string | null>(null);
     const [showAnswer, setShowAnswer] = useState(false);
-    const [isJudging, setIsJudging] = useState(false);
 
     if (questions.length === 0) {
         return <div className="text-center p-10 finance-mono text-primary">Loading Neural Link...</div>;
@@ -28,47 +26,15 @@ export default function GameCanvas() {
 
     const currentQuestion = questions[currentIndex];
 
-    // Socratic Judge Submit Handler
-    const handleSubmit = async () => {
-        if (!userAnswer.trim()) return;
+    // Socratic Judge Submit Handler (Now handled inside QuestionCard)
+    // Legacy state/handler removed.
 
-        setIsJudging(true);
-        setFeedback("Analyzing reasoning matrix...");
-
-        try {
-            const response = await fetch("/api/judge", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    problem_text: currentQuestion.problem_text,
-                    user_reasoning: userAnswer,
-                    correct_solution: currentQuestion.solution
-                }),
-            });
-
-            const data = await response.json();
-            if (data.feedback) {
-                setFeedback(data.feedback);
-            } else if (data.error) {
-                setFeedback(`System Error: ${data.error}`);
-            } else {
-                setFeedback("Connection to Judge lost. Self-verify.");
-            }
-        } catch (error) {
-            console.error("Judge Error:", error);
-            setFeedback("Error contacting Judge.");
-        } finally {
-            setIsJudging(false);
-            setShowAnswer(true);
-        }
-    };
 
     const [showHint, setShowHint] = useState(false);
     const [isFlipped, setIsFlipped] = useState(false); // Controlled Flip State
 
     // Reset state when question changes
     const handleNext = () => {
-        setFeedback(null);
         setShowHint(false);
         setIsFlipped(false); // Reset flip
         setUserAnswer("");
@@ -77,7 +43,6 @@ export default function GameCanvas() {
     };
 
     const handlePrev = () => {
-        setFeedback(null);
         setShowHint(false);
         setIsFlipped(false); // Reset flip
         setUserAnswer("");
@@ -122,9 +87,10 @@ export default function GameCanvas() {
                     setIsFlipped={setIsFlipped}
                     userAnswer={userAnswer}
                     setUserAnswer={setUserAnswer}
-                    feedback={feedback}
-                    handleSubmit={handleSubmit}
-                    isJudging={isJudging}
+                    // feedback, handleSubmit, isJudging are handled internally now
+                    feedback={null}
+                    handleSubmit={() => { }}
+                    isJudging={false}
                     showHint={showHint}
                     setShowHint={setShowHint}
                 />
