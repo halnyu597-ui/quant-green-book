@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         `;
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash", // Switching to specific version for reliable systemInstruction support
+            model: "gemini-pro", // Fallback to standard stable model
             systemInstruction: systemPrompt
         });
 
