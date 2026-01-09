@@ -211,20 +211,13 @@ export default function QuestionCard({
                                         State your reasoning. The Socratic Judge will evaluate it.
                                     </div>
                                 )}
-                                {chatHistory.map((msg, idx) => (
-                                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                        <div className={`max-w-[85%] rounded-lg p-3 text-sm font-mono ${msg.role === 'user'
-                                            ? 'bg-zinc-800 text-gray-200 border border-zinc-700'
-                                            : 'bg-primary/10 border-l-2 border-primary text-gray-200'
-                                            }`}>
-                                            {msg.role === 'assistant' && (
-                                                <span className="font-bold text-primary block text-[10px] mb-1 tracking-wider uppercase">Socratic Judge</span>
-                                            )}
+                                {chatHistory.filter(msg => msg.role !== 'user').map((msg, idx) => (
+                                    <div key={idx} className="flex justify-start">
+                                        <div className="max-w-[95%] rounded-lg p-3 text-sm font-mono bg-primary/10 border-l-2 border-primary text-gray-200">
+                                            <span className="font-bold text-primary block text-[10px] mb-1 tracking-wider uppercase">Socratic Judge</span>
                                             <div className="whitespace-pre-wrap leading-relaxed">
-                                                {msg.role === 'assistant' ? (
-                                                    /* @ts-expect-error: settings prop exists at runtime but missing in types */
-                                                    <Latex settings={{ throwOnError: false, trust: true }}>{msg.content}</Latex>
-                                                ) : msg.content}
+                                                {/* @ts-expect-error: settings prop exists at runtime but missing in types */}
+                                                <Latex settings={{ throwOnError: false, trust: true }}>{msg.content}</Latex>
                                             </div>
                                         </div>
                                     </div>
@@ -250,7 +243,7 @@ export default function QuestionCard({
                                             handleJudgeSubmit();
                                         }
                                     }}
-                                    className="w-full h-[100px] p-4 text-base text-white bg-zinc-900 border border-zinc-700 rounded-md focus:ring-2 focus:ring-green-500 font-mono resize-none"
+                                    className="w-full h-[250px] p-4 text-base text-white bg-zinc-900 border border-zinc-700 rounded-md focus:ring-2 focus:ring-green-500 font-mono resize-none"
                                     placeholder="Type your thoughts... (Ctrl+Enter to submit)"
                                 />
                                 <div className="flex justify-end gap-3 mt-2">
