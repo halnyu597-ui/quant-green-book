@@ -1,0 +1,371 @@
+[
+  {
+    "id": "prob_1",
+    "title": "Coin toss game",
+    "problem_text": "Two gamblers are playing a coin toss game. Gambler A has (n + 1)  fair coins; B  has n \nfair coins. What is the probability that A will have more heads than B if both flip all their \ncoins?",
+    "solution": "We have yet to cover all the powerful tools probability theory offers. What do we have now? Outcomes, events, event probabilities, and surely our reasoning capabilities! The one extra coin makes A different from B. If we remove a coin from A, A and B will become symmetric. Not surprisingly, the symmetry will give us a lot of nice properties. So let's remove the last coin of A and compare the number of heads in A's first n coins with B's n coins. There are three possible outcomes:\n\n$$ E_1: \\text{A's n coins have more heads than B's n coins} $$\n\n$$ E_2: \\text{A's n coins have equal number of heads as B's n coins} $$\n\n$$ E_3: \\text{A's n coins have fewer heads than B's n coins} $$\n\nBy symmetry, the probability that A has more heads is equal to the probability that B has more heads. So we have $ P(E_1) = P(E_3) $. Let's denote $ P(E_1) = P(E_3) = x $ and $ P(E_2) = y $.\nSince $ \\sum P(\\omega) = 1 $, we have $ 2x + y = 1 $.\n\nFor event $ E_1 $, A will always have more heads than B no matter what A's $(n+1)$-th coin's side is;\nfor event $ E_3 $, A will have no more heads than B no matter what A's $(n+1)$-th coin's side is.\nFor event $ E_2 $, A's $(n+1)$-th coin does make a difference. If it's a head, which happens with probability 0.5, it will make A have more heads than B.\n\nSo the $(n+1)$-th coin increases the probability that A has more heads than B by $ 0.5y $ and the total probability that A has more heads is:\n\n$$ x + 0.5y = x + 0.5(1 - 2x) = 0.5 $$\n\nwhen A has $n+1$ coins.",
+    "hint": "What are the possible results (events) if we compare the number of heads in A's first n coins with \nB'$s^{n}$ coins? By making the number of coins equal, we can take advantage of symmetry.  For each event, \nwhat will happen if A's last coin is a head? Or a tail?",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_2",
+    "title": "Card game",
+    "problem_text": "A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each \n\nvalue  2, 3,  4, 5, 6, 7, 8, 9, 10, j\nJac\n,k\n  q\nQuee\n,$n^{k}$\nKin\n,g \n a\nAce \n. Each  time the cards  are thoroughly  shuffled \n(so each card has equal probability of being selected). You pick up a card from the deck \nand the dealer picks another one without replacement. If you have a larger number, you \nwin; if the numbers are equal or yours is smaller, the house wins-as in all other casinos, \nthe house always has better odds of winning. What is your probability of winning?",
+    "solution": "One answer to this problem is to consider all 13 different outcomes of your card. The card can have a value 2, 3, ..., A and each has $\\frac{1}{13}$ of probability. With a value of 2, the probability of winning is $\\frac{0}{51}$; with a value of 3, the probability of winning is $\\frac{4}{51}$ (when the dealer picks 2); ... ; with a value of A, the probability of winning is $\\frac{48}{51}$ (when the dealer picks 2, 3, ..., or K). So your probability of winning is:\n\n$$ \\sum_{i=0}^{12} \\frac{1}{13} \\times \\frac{4i}{51} = \\frac{4}{13 \\times 51} \\sum_{i=0}^{12} i = \\frac{4}{13 \\times 51} \\times \\frac{12 \\times 13}{2} = \\frac{8}{17} $$\n\nAlthough this is a straightforward solution and it elegantly uses the sum of an integer sequence, it is not the most efficient way to solve the problem. If you have got the core spirits of the coin tossing problem, you may approach the problem by considering three different outcomes:\n\n$$ E_1: \\text{Your card has a number larger than the dealer's} $$\n\n$$ E_2: \\text{Your card has a number equal to the dealer's} $$\n\n$$ E_3: \\text{Your card has a number lower than the dealer's} $$\n\nAgain by symmetry, $ P(E_1) = P(E_3) $. So we only need to figure out $ P(E_2) $, the probability that two cards have equal value. Let's say you have randomly selected a card. Among the remaining 51 cards, only 3 cards will have the same value as your card. So the probability that the two cards have equal value is $ \\frac{3}{51} $. As a result, the probability that you win is:\n\n$$ P(E_1) = \\frac{1}{2} (1 - P(E_2)) = \\frac{1}{2} (1 - \\frac{3}{51}) = \\frac{1}{2} \\times \\frac{48}{51} = \\frac{8}{17} $$",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_3",
+    "title": "Drunk passenger",
+    "problem_text": "A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to \none of the  100 seats on that flight.  For convenience, let's say that the n-th passenger in \nline  has  a ticket  for  the seat number n.  Being drunk,  the  first person  in  line picks  a \nrandom seat (equally likely for each seat). All of the other passengers are sober, and will \ngo to  their proper seats unless  it is already occupied;  In  that case, they  will randomly \nchoose a free seat.  You're person number 100. What is the probability that you end up \nin your seat (i.e., seat #100) ?",
+    "solution": "Let's consider seats #1 and #100. There are two possible outcomes:\n\n£ Seat # 1 is taken before # 100; 1 : \n\n£\n2 :  Seat # 100 is taken before # 1. \n\nIf any passenger takes seat # 100 before # 1 is taken, surely you will not end up in you \nown seat. But if any passenger takes # 1 before # 100 is taken, you will definitely end up \nin  you  own  seat.  By  symmetry,  either  outcome  has  a  probability  of 0.5.  So  the \nprobability that you end up in your seat is 50%. \n\nIn  case  this  over-simplified  version  of reasoning  is  not  clear  to  you,  consider  the \nfollowing detailed explanation: If the drunk passenger takes #1  by chance, then it's clear \nall the rest of the passengers will have the correct seats. If he takes # 100, then you will \nnot get your seat. The probabilities that he takes #1 or #100 are equal. Otherwise assume \nthat he takes the n-th seat, where n  is a number between 2 and 99. Everyone between 2 \nand (n-1) will get his own seat. That means the n-th passenger essentially becomes the \nnew \"drunk\" guy with designated seat #1. If he chooses #1, all the rest of the passengers \nwill  have  the  correct  seats.  If he  takes  # 100,  then  you will  not  get your seat.  (The \nprobabilities  that he  takes  # 1 or # 100 are  again  equal.)  Otherwise  he will just make \nanother passenger down the line the new \"drunk\" guy with designated seat # 1 and each \nnew \"drunk\" guy has equal probability of taking #1  or #100. Since at all jump points \nthere's an equal probability for the \"drunk\" guy to choose seat #1  or 100, by symmetry, \nthe probability that you, as the lOOth passenger, will seat in #100 is 0.5.",
+    "hint": "If you are trying to use complicated conditional probability to solve the problem, go back and think \nagain.  If you decide to  start with  a  simpler version  of the  problem,  starting with  two  passengers and \nincreasing the  number of passengers  to  show a pattern by induction,  you can solve the problem more \nefficiently. But the problem is much simpler than that. Focus on events and symmetry and you will have \nan intuitive answer.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_4",
+    "title": "N points on a circle",
+    "problem_text": "Given N points drawn randomly on the circumference of a circle, what is the probability \nthat they are all within a semicircle?",
+    "solution": "Let's start at one point and clockwise label the points as $1, 2, ..., N$. The probability that all the remaining $N-1$ points from $2$ to $N$ are in the clockwise semicircle starting at point $1$ is $1/2^{N-1}$. Similarly, the probability that a clockwise semicircle starting at any point $i$ contains all the other $N-1$ points is also $1/2^{N-1}$.\n\nClaim: the events that all the other $N-1$ points are in the clockwise semicircle starting at point $i$ ($i = 1, ..., N$) are mutually exclusive. Logic: If we start at point $i$ and find all points in the next semicircle, the arc from the last point back to $i$ must be greater than a semicircle, making it impossible for any other point to start a chain containing all points.\n\nHence, these $N$ events are mutually exclusive. The total probability is the sum of their individual probabilities:\n\n$$ P(E) = \\sum_{i=1}^{N} P(E_i) = N \\times \\frac{1}{2^{N-1}} = \\frac{N}{2^{N-1}} $$\n\nGenerally, if the arc length is $x$ (where $x < 1/2$), the probability is $N x^{N-1}$.",
+    "hint": "Consider the events that starting from a point n, you can reach all the rest of the points on the circle \nclockwise, n E  {I, ... , N}  in a semicircle. Are these events mutually exclusive?",
+    "chapter": "Probability",
+    "graph_url": "/images/figure_4_1.png"
+  },
+  {
+    "id": "prob_5",
+    "title": "Poker hands",
+    "problem_text": "Poker is a card game in which each player gets a hand of 5 cards. There are 52 cards in a \ndeck.  Each  card  has  a  value  and  belongs  to  a  suit.  There  are  13  values, \njack queen king ace  spade  club  hean  diamond \n2,  3,  4,  5,  6,  7,  8,  9,  10,  J,  Q, K, A, and four suits,  •  , \"', •  ,  •  .\n\nWhat are the probabilities of getting hands with  four-of-a-kind  (four of the  five  cards \nwith the same value)? Hands with a full house (three cards of one value and two cards of \nanother value)? Hands with two pairs?",
+    "solution": "The number of different hands of a five-card draw is the number of 5-element \n\n52_subsets of $a^{52}$-element  so total number of hands  (  5 )  2, 598, 960. \n\nHands with a four-of-a-kind:  First we can choose the value of the four cards with the \nsame  value,  there  are  13  choices.  The  5th card  can  be  any  of the  rest 48  cards  (12 \nchoices for values and 4 choices for suits). So the number of hands with four-of-a kind is \n13x48 = 624. \n\nHands with  a Full  House:  In sequence we need to choose the  value of the triple,  13 \n\nchoices; the suits of the triple, (;) choices; the  value of the pair,  12 choices; and the \n\nsuits  of  the  pair,  (  choices.  So  the  number  of  hands  with  full  house  is \n\n13x(;)xl2xG)  13x4x 12x6  3, 744. \n\nHands  with  Two  Pairs:  In sequence we need to  choose the  values of the two  pairs, \n\nchoices; the suits of the first pair, (  choices; the suits of the second pair,  ( \n\nchoices;  and the  remaining card,  44  ( 52-4 $x^{2}$,  since the  last  cards  can  not  have the \nsame value as either pair) choices. So the number of hands with two pairs is \n\n78x6x6x \n\nTo calculate the probability of each, we only need to divide the number of hands of each \nkind by the total possible number of hands.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_6",
+    "title": "Hopping rabbit",
+    "problem_text": "A rabbit sits at the bottom of a staircase with n stairs. The rabbit can hop up only one or \ntwo stairs at a time.  How many different ways are there for the rabbit to ascend to the \ntop of the stairs?",
+    "solution": "Let's begin with the simplest cases and consider solving the problem for any \nf number  of stairs  using  induction.  For n =I ,  there  is  only  one  way  and  (1) =I. For \nn = 2,  we  can  have  one  2-stair hop  or two  I-stair hops.  So f (2) = 2.  For any n > 2, \nthere are always two possibilities for the last hop, either it's a  I-stair hop or $a^{2}$-stair hop. \nIn the former case, the rabbit is at (n-1) before reaching n, and it has  f(n -1) ways to \nreach  (n -1).  In  the  latter case,  the  rabbit  is  at  (n-2)  before  reaching  n,  and it  has \nf(n-2)  ways  to  reach  (n-2).  So  we  have  f(n)=f(n-2)+/(n-l).  Using  this \nfunction we can calculate  f(n)  for  n = 3, 4, · · · 6",
+    "hint": "Consider an induction approach.  Before the final  hop to reach then-th stair, the rabbit can be at \neither the (n-1 )th stair or the (n-2)th stair assuming n > 2.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_7",
+    "title": "Screwy pirates",
+    "problem_text": "Having  peacefully  divided the  loot  (in chapter  2),  the  pirate  team goes  on  for  more \nlooting  and expands  the  group  to  11  pirates.  To protect their hard-won treasure, they \ngather together to put all the loot in a safe. Still being a democratic bunch, they decide \nthat only a majority - any majority - of them  together can open the safe. So they \nask a  locksmith to  put a certain number of locks  on  the  safe.  To access  the treasure, \nevery  lock needs  to  be opened.  Each lock can have multiple  keys; but each key only \nopens one lock. The locksmith can give more than one key to each pirate. \n\nWhat  is  the smallest number of locks needed?  And how  many keys  must  each pirate \ncarry?",
+    "solution": "We need to ensure that any group of 6 pirates can open the safe, but any group of 5 (or fewer) cannot. This means for every distinct group of 5 pirates, there must be at least one lock they *cannot* open (i.e., none of them has the key).\n\nLet $N=11$ (pirates) and $M=6$ (majority). We want every subset of size $M-1=5$ to fail.\n\n1. **Number of Locks**: Assign a unique lock to every possible group of 5 pirates. Only the *other* 6 pirates have the keys to this lock. The number of such groups is:\n$$ \\binom{11}{5} = \\frac{11 \\times 10 \\times 9 \\times 8 \\times 7}{5 \\times 4 \\times 3 \\times 2 \\times 1} = 462 $$\nSo, 462 locks are needed.\n\n2. **Keys per Pirate**: Each pirate must hold a key for every lock *except* the ones assigned to the groups of 5 they belong to. Equivalently, a pirate $P$ has a key for a lock corresponding to a group $G$ if $P \\notin G$. The number of groups of 5 that exclude a specific pirate is:\n$$ \\binom{10}{5} = \\frac{10 \\times 9 \\times 8 \\times 7 \\times 6}{5 \\times 4 \\times 3 \\times 2 \\times 1} = 252 $$\nSo each pirate carries 252 keys.",
+    "hint": "every subgroup of 6 pirates should have the same key to a unique lock that the other 5 pirates do \nnot have.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_8",
+    "title": "Chess tournament",
+    "problem_text": "A chess tournament has $2^n$ players with skills $1 > 2 > \\dots > 2^n$. It is organized as a knockout tournament, so that after each round only the winner proceeds to the next round. Except for the final, opponents in each round are drawn at random. Let's also assume that when two players meet in a game, the player with better skills always wins. What's the probability that players 1 and 2 will meet in the final?",
+    "solution": "Player 1 starts in a position. For Player 1 and Player 2 to meet in the final, they must start in different halves of the tournament bracket. If they fall into the same half, they would meet (and Player 2 would be eliminated) before the final.\n\nOnce Player 1 is placed, there are $2^n - 1$ remaining spots for Player 2.\nThe number of spots in the opposite half of the bracket is $2^{n-1}$.\n\nThus, the probability is:\n$$ P = \\frac{2^{n-1}}{2^n - 1} $$",
+    "hint": "For them to meet in the final, they must not meet in any earlier round. This implies they must start in different sub-brackets.",
+    "chapter": "Probability",
+    "graph_url": "/images/figure_4_2.png"
+  },
+  {
+    "id": "prob_9",
+    "title": "Application letters",
+    "problem_text": "You're  sending job applications to  5  firms:  Morgan  Stanley,  Lehman Brothers,  UBS, \nGoldman Sachs, and Merrill Lynch. You have 5 envelopes on the table neatly typed with \nnames  and  addresses  of people  at  these  5  firms.  You  even  have  5  cover  letters \npersonalized to each of these firms. Your 3-year-old tried to be helpful and stuffed each \ncover letter into each of the envelopes for you. Unfortunately she randomly put letters\n\ninto envelopes without realizing that the letters are personalized. What is the probability \nthat all 5 cover letters are mailed to the wrong firms?",
+    "solution": "This problem is a classic example for the Inclusion-Exclusion Principle. Let $E_i$ ($i = 1, ..., 5$) be the event that the $i$-th letter has the correct envelope. We want to find the probability that *none* of the letters are correct, which is $1 - P(\\cup_{i=1}^{5} E_i)$.\n\nBy the Inclusion-Exclusion Principle:\n\n$$ P(\\cup_{i=1}^{n} E_i) = \\sum P(E_i) - \\sum P(E_i E_j) + \\sum P(E_i E_j E_k) - ... + (-1)^{n-1} P(E_1 ... E_n) $$\n\nFor $n=5$, we have:\n$$ \\sum P(E_i) = \\binom{5}{1} \\times \\frac{1}{5} = 1 $$\n$$ \\sum P(E_i E_j) = \\binom{5}{2} \\times \\frac{1}{5 \\times 4} = \\frac{1}{2!} $$\n$$ \\sum P(E_i E_j E_k) = \\binom{5}{3} \\times \\frac{1}{5 \\times 4 \\times 3} = \\frac{1}{3!} $$\n\nGenerally, the sum of probabilities for intersection of $k$ events is $1/k!$. So:\n\n$$ P(\\cup_{i=1}^{5} E_i) = 1 - \\frac{1}{2!} + \\frac{1}{3!} - \\frac{1}{4!} + \\frac{1}{5!} $$\n\nThe probability that all letters are wrong is:\n\n$$ 1 - P(\\cup E_i) = \\frac{1}{2!} - \\frac{1}{3!} + \\frac{1}{4!} - \\frac{1}{5!} = \\frac{1}{2} - \\frac{1}{6} + \\frac{1}{24} - \\frac{1}{120} = \\frac{44}{120} = \\frac{11}{30} $$",
+    "hint": "The complement is that at least one letter is mailed to the correct firm.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_10",
+    "title": "Birthday problem",
+    "problem_text": "How many people do we need in a class to make the probability that two people have the \nsame birthday more than $\\frac{1}{2}$? (For simplicity, assume 365 days a year.)",
+    "solution": "Let $P(E)$ be the probability that at least two people share a birthday. It is easier to calculate the complement event $P(E^c)$: the probability that no two people share a birthday.\n\n$$ P(E^c) = 1 \\times \\frac{364}{365} \\times \\frac{363}{365} \\times ... \\times \\frac{365-n+1}{365} = \\frac{365!}{365^n (365-n)!} $$\n\nWe want $P(E) = 1 - P(E^c) > 0.5$, which means $P(E^c) < 0.5$.\n\nCalculating for increasing $n$:\nFor $n=23$, $P(E^c) \\approx 0.493$, so $P(E) \\approx 0.507 > 0.5$.\n\nThus, we need **23** people.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_11",
+    "title": "Cubic of integer",
+    "problem_text": "Let x be an integer between 1 and 1012,  what is the probability that the cubic of x  ends \nwith 11?",
+    "solution": "We want to find the probability that $x^3 \\equiv 11 \\pmod{100}$.\n\nFirst, consider the last digit: $x^3 \\equiv 1 \\pmod{10}$. The only digit $d$ such that $d^3$ ends in 1 is $d=1$. So $x$ must end in 1. We can write $x = 10k + 1$ for some integer $k$.\n\nNow expand $x^3$:\n$$ x^3 = (10k + 1)^3 = 1000k^3 + 300k^2 + 30k + 1 $$\n\nWe look at this modulo 100:\n$$ x^3 \\equiv 30k + 1 \\pmod{100} $$\n\nWe require $x^3 \\equiv 11 \\pmod{100}$, so:\n$$ 30k + 1 \\equiv 11 \\pmod{100} $$\n$$ 30k \\equiv 10 \\pmod{100} $$\n\nDividing by 10 (and noting the modulus implies we are checking the tens digit):\n$$ 3k \\equiv 1 \\pmod{10} $$\n\nChecking values for $k \\in \\{0, ..., 9\\}$:\n- $k=7 \\implies 3(7) = 21 \\equiv 1 \\pmod{10}$.\nThis is the unique solution modulo 10.\n\nSo $x$ must be of the form $10(7) + 1 = 71$ (plus any multiple of 100). This means the last two digits of $x$ must be **71**.\n\nSince $x$ is a random integer, the probability that its last two digits are 71 is $\\frac{1}{100}$ or **1%**.",
+    "hint": "The last two digits of x3  only depend on the last two digits of x.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_12",
+    "title": "Boys and girls",
+    "problem_text": "**Part A:** A company is holding a dinner for working mothers with at least one son. Ms. Jackson, a mother with two children, is invited. What is the probability that both children are boys?\n\n**Part B:** You visit a friend who has two children. You ring the doorbell and a boy answers. What is the probability that the other child is also a boy?",
+    "solution": "**Part A Solution:**\nLet the sample space for two children be $\\{BB, BG, GB, GG\\}$ (Older, Younger), each with probability $1/4$.\nMs. Jackson is invited because she has *at least one son*, so we exclude $GG$. The reduced sample space is $\\{BB, BG, GB\\}$.\nThe event \"both are boys\" is $\\{BB\\}$.\n$$ P(\\text{Both Boys} | \\text{At least one Boy}) = \\frac{1}{3} $$\n\n**Part B Solution:**\nHere, we are observing a *specific* child (the one who answered the door) is a boy. This conditions the sample space differently.\nAssuming it is equally likely for either child to answer the door:\n- If the older child answers, we know Older = Boy. Space: $\\{BB, BG\\}$. P(Both Boys) = $1/2$.\n- If the younger child answers, we know Younger = Boy. Space: $\\{BB, GB\\}$. P(Both Boys) = $1/2$.\nIntuitively, the gender of the *other* child is independent of the one you see.\n$$ P(\\text{Other is Boy} | \\text{Seen Child is Boy}) = \\frac{1}{2} $$",
+    "hint": "Part A: List the sample space. Does 'at least one' include BG and GB?\nPart B: Does knowing *one specific* child is a boy give you information about the *other* child?",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_13",
+    "title": "All-girl world?",
+    "problem_text": "In a primitive society, every couple prefers to have a baby girl. There is $$50\\%$$ chance \nthat  each  child  they  have  is  a  girl,  and  the  genders  of their  children  are  mutually \nindependent. If each couple insists on having more children until they get a girl and once \nthey have a girl they will stop having more children, what will eventually happen to the \nfraction of girls in this society?",
+    "solution": "It  was  surprising  that  many  interviewees-include  many  who  studied \nprobability-have the misconception that there will be more girls.  Do not let the word \n\"prefer\" and a wrong  intuition misguide  you.  The fraction  of baby girls are driven  by \nnature, or at least the X and Y chromosomes, not by the couples' preference. You only \nneed to  look at the key information: 50% and independence. Every new-born child has \nequal probability of being a boy or a girl regardless of the gender of any other children. \nSo the fraction of girls born is always 50% and the fractions of girls in the society will \nstay stable at 50%.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_14",
+    "title": "Unfair coin",
+    "problem_text": "You are given 1000 coins. Among them,  1 coin has heads on both sides. The other 999 \ncoins are  fair  coins.  You randomly choose  a coin and toss it  10 times.  Each time,  the \ncoin turns up heads. What is the probability that the coin you choose is the unfair one?",
+    "solution": "Let $U$ be the event that we picked the unfair coin (double heads), and $F$ be the event we picked a fair coin.\nLet $H_{10}$ be the event of observing 10 heads in a row.\n\nWe are given:\n- $P(U) = \\frac{1}{1000}$ and $P(F) = \\frac{999}{1000}$.\n- $P(H_{10} | U) = 1^{10} = 1$ (since it always lands heads).\n- $P(H_{10} | F) = (\\frac{1}{2})^{10} = \\frac{1}{1024}$.\n\nUsing Bayes' Theorem:\n$$ P(U | H_{10}) = \\frac{P(H_{10} | U)P(U)}{P(H_{10} | U)P(U) + P(H_{10} | F)P(F)} $$\n\nSubstitute the values:\n$$ P(U | H_{10}) = \\frac{1 \\cdot \\frac{1}{1000}}{1 \\cdot \\frac{1}{1000} + \\frac{1}{1024} \\cdot \\frac{999}{1000}} $$\n\nMultiply numerator and denominator by 1000:\n$$ P(U | H_{10}) = \\frac{1}{1 + \\frac{999}{1024}} $$\n$$ P(U | H_{10}) = \\frac{1024}{1024 + 999} = \\frac{1024}{2023} \\approx 0.506 $$\n\nSo there is roughly a **50.6%** chance it is the unfair coin.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_15",
+    "title": "Fair probability from an unfair coin",
+    "problem_text": "If you have an unfair coin, which may bias toward either heads or tails at an unknown \nprobability, can you generate even odds using this coin?",
+    "solution": "Yes, it is possible using the von Neumann extractor method. The key is to toss the coin **twice**.\n\nLet $p$ be the probability of Heads (H) and $1-p$ be the probability of Tails (T).\n\nThe possible outcomes for two independent tosses are:\n- **HH**: Probability $p^2$\n- **HT**: Probability $p(1-p)$\n- **TH**: Probability $(1-p)p$\n- **TT**: Probability $(1-p)^2$\n\nNotice that $P(HT) = P(TH) = p(1-p)$. They are equally likely!\n\n**Algorithm:**\n1. Toss the coin twice.\n2. If you get **HT**, call it a \"Win\" (or Heads).\n3. If you get **TH**, call it a \"Loss\" (or Tails).\n4. If you get **HH** or **TT**, discard the result and toss twice again.\n\nThis procedure generates a perfectly fair $50/50$ outcome regardless of the bias $p$ (as long as $0 < p < 1$).",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_16",
+    "title": "Dart game",
+    "problem_text": "Jason  throws  two  darts  at  a  dartboard,  aiming  for  the  center.  The  second  dart  lands \nfarther from the center than the first.  If Jason throws a third dart aiming for the center, \nwhat  is  the  probability that  the  third  throw  is  farther  from  the  center  than  the  first? \nAssume Jason's skillfulness is constant.",
+    "solution": "A standard answer directly applies the conditional probability by enumerating \nall possible outcomes. If we rank the three darts' results from the best (A) to the worst \n(C), there are 6 possible outcomes with equal probability: \n\n12 I should point out that this simple approach is not the most efficient approach since I am disregarding \nthe cases HH and TT. When the coin has high bias (one side is far more likely than the other side to occur), \nthe method may take many runs to generate one useful result. For more complex algorithm that increasing \nefficiency, please refer to Tree Algorithms for Unbiased Coin Tossing with a Biased Coin by Quentin F. \nStout and Bette L. Warren, Annals of Probability 12 ( 1984), pp. 212-222.\n\nOutcome  $1^{2}$  $3^{4}$  $5^{6}$ \n\n1st throw  A  B  A  c  B  c \n2nd throw  B  A  c  A  c  B \n\n3rd throw  c  c  B  B  A  A \n\nThe information from the first two throws eliminates outcomes 2, 4 and 6.  Conditioned \non outcomes 1, 3, and 5, the outcomes that the 3rd throw is worse than the 1st throw are \noutcomes  1 and 3.  So there  is  $\\frac{2}{3}$  probability that  the third throw  is  farther  from  the \ncenter than the first. \n\nThis approach surely is reasonable. Nevertheless, it is not an efficient approach. When \nthe number of darts is small, we can easily enumerate all outcomes. What if it is a more \ncomplex version of the original problem: \n\nJason throws n ( $n^{2}$ 5) darts at a dartboard, aiming for the center. Each subsequent dart \nis farther from the center than the first dart. If Jason throws the (n + l)th  dart, what is the \nprobability that it is also farther from the center than his first? \n\nThis question is equivalent to a simple question: what is the probability that the (n + 1)th \nthrow is not the best among all (n + 1)  throws? Since the 1st throw is the best among the \nfirst n throws, essentially I am saying the event that the (n + l)th  throw is the best of all \n( n + 1)  throws (let's call it An+i )  is independent of the event that the 1st throw is the best \n\nof the first n throws (let's call it $A_{1}$ ). In fact,  An+i  is independent of the order of the first \nn throws. Are these two events really independent? The answer is a resounding yes. If it \nis not obvious to you that An+i  is independent of the order of the first n throws, let's look \n\nat it another way: the order of the first n throws is independent of An+i  • Surely this claim \n\nis  conspicuous.  But  independence  is  symmetric!  Since  the  probability  of  An+i  is \n1/(n+1), the probability that  + l)th throw is not the best is  + 1) .13 ($n^{n}$ /(n \n\nFor the  original  version,  three  darts  are  thrown  independently,  they  each  have  a  $\\frac{1}{3}$ \nchance of being the best throw. As long as the third dart is not the best throw, it will be \nworse than the first dart. Therefore the answer is $\\frac{2}{3}$.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_17",
+    "title": "Birthday line",
+    "problem_text": "At a movie theater, a whimsical manager announces that she will give a free ticket to the \nfirst  person in  line  whose birthday is  the  same as  someone who  has  already  bought a \nticket. You are given the opportunity to choose any position in line. Assuming that you \n\n13 Here you can again use symmetry argument: each throw is equally likely to be the best.\n\ndon't know anyone else's birthday and all birthdays are distributed randomly throughout \nthe year (assuming 365 dals in a year), what position in line gives you the largest chance \nof getting the free ticket?",
+    "solution": "Let $P(n)$ be the probability that the $n$-th person is the first to win.\nFor the $n$-th person to win, two conditions must be met:\n1. None of the first $n-1$ people have shared a birthday.\n2. The $n$-th person shares a birthday with at least one of the previous $n-1$ people.\n\nLet $Q_{n-1}$ be the probability that the first $n-1$ people have distinct birthdays:\n$$ Q_{n-1} = \\frac{365}{365} \\times \\frac{364}{365} \\times ... \\times \\frac{365-(n-2)}{365} $$\n\nThe probability that the $n$-th person matches at least one of the previous $n-1$ (given they are all distinct) is:\n$$ \\frac{n-1}{365} $$\n\nSo, the total probability is:\n$$ P(n) = Q_{n-1} \\times \\frac{n-1}{365} $$\n\nWe want to maximize $P(n)$. We analyze the ratio $\\frac{P(n)}{P(n-1)}$:\n$$ \\frac{P(n)}{P(n-1)} = \\frac{Q_{n-1} \\frac{n-1}{365}}{Q_{n-2} \\frac{n-2}{365}} = \\frac{Q_{n-1}}{Q_{n-2}} \\times \\frac{n-1}{n-2} $$\nWe know $Q_{n-1} = Q_{n-2} \\times \\frac{365-(n-2)}{365}$, so:\n$$ \\frac{P(n)}{P(n-1)} = \\frac{365-n+2}{365} \\times \\frac{n-1}{n-2} $$\n\nSetting $\\frac{P(n)}{P(n-1)} \\approx 1$ gives $(365-n)(n-1) \\approx 365(n-2)$, which roughly leads to $n^2 \\approx 365$, so $n \\approx \\sqrt{365} \\approx 19.1$.\nChecking values around 19 and 20:\n- We find the peak is at **20**.\n\nSo you should choose to be the **20th person** in line.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_18",
+    "title": "Dice order",
+    "problem_text": "We throw 3 dice one by one. What is the probability that we obtain 3 points in strictly increasing order?",
+    "solution": "For the three dice to be in strictly increasing order, the three values must be distinct.\n\nFirst, consider the number of ways to choose 3 distinct numbers from the set $\\{1, 2, 3, 4, 5, 6\\}$. This is given by the combination formula:\n$$ \\binom{6}{3} = \\frac{6 \\times 5 \\times 4}{3 \\times 2 \\times 1} = 20 $$\n\nFor any set of 3 distinct numbers (e.g., $\\{2, 5, 1\\}$), there is exactly **one** way to arrange them in strictly increasing order ($1, 2, 5$).\n\nThe total number of possible outcomes when throwing 3 dice is $6^3 = 216$.\n\nThus, the probability is:\n$$ P = \\frac{20}{216} = \\frac{5}{54} $$",
+    "hint": "To obtain 3 points in strictly increasing order, the 3 points must be different. For 3 different points \nin a sequence, strictly increasing order is one of the possible permutations.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_19",
+    "title": "Monty Hall problem",
+    "problem_text": "Monty Hall problem is a probability puzzle based on an old American show Let's Make \na Deal. The problem is named after the show's host. Suppose you're on the show now, \nand you're given the choice of 3 doors. Behind one door is a car; behind the other two, \ngoats. You don't know ahead of time what is behind each of the doors. \n\nYou pick one of the doors and announce it. As soon as you pick the door, Monty opens \none of the other two doors that he  knows has a goat behind it.  Then he  gives you the \noption to either keep your original choice or switch to the third door. Should you switch? \nWhat is the probability of winning a car if you switch?",
+    "solution": "This is the classic Monty Hall problem. The answer is **YES, you should switch**.\n\nHere is the logic:\n1. When you first pick a door, the probability it hides the car is $1/3$, and the probability it hides a goat is $2/3$.\n2. If you picked the car (1/3), Monty opens a goat door. Switching makes you lose.\n3. If you picked a goat (2/3), Monty opens the *other* goat door (since he must reveal a goat). Switching leads to the car.\n\nSo, switching wins whenever your initial choice was a goat, which happens $2/3$ of the time.\n$$ P(\\text{Win } | \\text{ Switch}) = \\frac{2}{3} $$",
+    "hint": "What happens if your initial pick was a goat? How often does that happen?",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_20",
+    "title": "Amoeba Population",
+    "problem_text": "A population of amoebas starts with 1 amoeba. Each minute, every amoeba independently does one of four things with equal probability (1/4):\n- Dies.\n- Stays the same.\n- Splits into 2.\n- Splits into 3.\n\nWhat is the probability that the amoeba population eventually dies out?",
+    "solution": "Let $P(E)$ be the probability that the population starting with 1 amoeba eventually dies out.\nConsider the state after 1 minute:\n- 1/4: Dies (Population 0). Prob of extinction = 1.\n- 1/4: Stays (Population 1). Prob of extinction = $P(E)$.\n- 1/4: Splits into 2. Prob of extinction = $P(E)^2$ (since each lineage must die out independently).\n- 1/4: Splits into 3. Prob of extinction = $P(E)^3$.\n\nThe equation is:\n$$ P(E) = \\frac{1}{4}(1) + \\frac{1}{4}P(E) + \\frac{1}{4}P(E)^2 + \\frac{1}{4}P(E)^3 $$\n\nMultiply by 4:\n$$ 4P(E) = 1 + P(E) + P(E)^2 + P(E)^3 $$\n$$ P(E)^3 + P(E)^2 - 3P(E) + 1 = 0 $$\n\nWe know $P(E)=1$ is a root (since if $P(E)=1$, LHS=$1+1-3+1=0$). Divide by $(P(E)-1)$:\n$$ (P(E)-1)(P(E)^2 + 2P(E) - 1) = 0 $$\n\nThe roots are $1$, $-1+\\sqrt{2}$, and $-1-\\sqrt{2}$. Since probability must be positive, candidates are 1 and $\\sqrt{2}-1 \\approx 0.414$.\nThe expected number of offspring is $0(1/4) + 1(1/4) + 2(1/4) + 3(1/4) = 1.5 > 1$. Since the population tends to grow, the probability of extinction is the smallest positive root.\n$$ P(E) = \\sqrt{2} - 1 \\approx 41.4\\% $$",
+    "hint": "Use the Law of Total Probability conditioning on the first step. Let P(E) be the probability of eventual extinction.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_21",
+    "title": "Candies in a jar",
+    "problem_text": "You are taking out candies one by one from a jar that has 10 red candies, 20 blue candies, and 30 green candies in it. What is the probability that there are at least 1 blue candy and 1 green candy left in the jar when you have taken out all the red candies?",
+    "solution": "We want the stack of Red candies to be exhausted *before* the Blues run out AND *before* the Greens run out. This is equivalent to saying that in the sequence of removing candies:\n- The **last** Red is removed before the **last** Blue.\n- The **last** Red is removed before the **last** Green.\n\nLet's consider the very last candy remaining in the jar (from the total 60). Ideally, it should be Blue or Green, not Red.\n\nCase 1: The Last candy is **Blue**.\nProbability: $P(L_B) = \\frac{20}{60} = \\frac{1}{3}$.\nIn this case, Red is automatically exhausted before the last Blue. We just need to check the relative order of Red vs Green. Conditioned on the last being Blue, we look at the sub-problem of Red vs Green. We need the last of $R \\cup G$ to be Green.\n$P(L_{G|RG}) = \\frac{30}{10+30} = \\frac{3}{4}$.\nJoint probability: $\\frac{1}{3} \\times \\frac{3}{4} = \\frac{1}{4}$.\n\nCase 2: The Last candy is **Green**.\nProbability: $P(L_G) = \\frac{30}{60} = \\frac{1}{2}$.\nWe need the last of $R \\cup B$ to be Blue.\n$P(L_{B|RB}) = \\frac{20}{10+20} = \\frac{2}{3}$.\nJoint probability: $\\frac{1}{2} \\times \\frac{2}{3} = \\frac{1}{3}$.\n\nCase 3: The Last candy is Red. This is a failure state.\n\nTotal Probability:\n$$ P = \\frac{1}{4} + \\frac{1}{3} = \\frac{3}{12} + \\frac{4}{12} = \\frac{7}{12} $$",
+    "hint": "Focus on the 'last' candy. For the condition to hold, the last candy of the (Red, Blue) pair must be Blue, and the last of the (Red, Green) pair must be Green.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_22",
+    "title": "Coin toss game",
+    "problem_text": "Two players, A and B, alternatively toss a fair coin (A  tosses the coin first, then B tosses \nthe coin,  then A, then B ... ).  The sequence of heads and tails is recorded.  If there  is  a \nhead followed by a tail (HT subsequence), the game ends and the person who tosses the \ntail wins.  What is the probability that A wins the game?",
+    "solution": "Let's track the state of the game. Let $S$ be the start state (no Heads pending). Let $H$ be the state where the previous toss was Heads (so a Tail now ends the game).\n\nLet $P_A$ be the probability A wins starting from state $S$ (A's turn).\nLet $P_B$ be the probability A wins starting from state $S$ (B's turn).\nLet $Q_A$ be the probability A wins starting from state $H$ (A's turn).\nLet $Q_B$ be the probability A wins starting from state $H$ (B's turn).\n\n**Transitions:**\n1. From $S$ (Start):\n   - If outcome is T: State remains $S$, turn passes.\n   - If outcome is H: State becomes $H$, turn passes.\n   $$ P_A = \\frac{1}{2} P_B + \\frac{1}{2} Q_B $$\n   $$ P_B = \\frac{1}{2} P_A + \\frac{1}{2} Q_A $$\n\n2. From $H$ (Pending Head):\n   - If outcome is T: Current player wins.\n     - For $Q_A$: A wins ($P=1$).\n     - For $Q_B$: B wins ($P=0$ for A).\n   - If outcome is H: State remains $H$, turn passes.\n   $$ Q_A = \\frac{1}{2}(1) + \\frac{1}{2} Q_B $$\n   $$ Q_B = \\frac{1}{2}(0) + \\frac{1}{2} Q_A $$\n\n**Solving:**\nFrom the $Q$ equations:\n$$ Q_B = \\frac{1}{2} Q_A $$\n$$ Q_A = \\frac{1}{2} + \\frac{1}{4} Q_A \\implies \\frac{3}{4} Q_A = \\frac{1}{2} \\implies Q_A = \\frac{2}{3}, \\ Q_B = \\frac{1}{3} $$\n\nSubstitute back into $P$ equations:\n$$ P_A = \\frac{1}{2} P_B + \\frac{1}{6} $$\n$$ P_B = \\frac{1}{2} P_A + \\frac{1}{3} $$\n\nSubstitute $P_B$ into $P_A$:\n$$ P_A = \\frac{1}{2} (\\frac{1}{2} P_A + \\frac{1}{3}) + \\frac{1}{6} $$\n$$ P_A = \\frac{1}{4} P_A + \\frac{1}{6} + \\frac{1}{6} = \\frac{1}{4} P_A + \\frac{1}{3} $$\n$$ \\frac{3}{4} P_A = \\frac{1}{3} \\implies P_A = \\frac{4}{9} $$\n\nSo the probability that A wins is **4/9**.",
+    "hint": "condition on the result of A's first toss and use symmetry.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_23",
+    "title": "Russian roulette series",
+    "problem_text": "Let's  play  a  traditional  version  of Russian  roulette.  A  single  bullet  is  put  into  $a^{6}$-\nchamber revolver. The barrel is randomly spun so that each chamber is equally likely to \nbe  under  the  hammer.  Two  players  take  turns  to  pull  the  trigger-with  the  gun \nunfortunately pointing at one's own head-without further spinning until the gun goes \noff and the person who gets killed loses. If you, one of the players, can choose to go first \nor second, how will you choose? And what is your probability of loss?",
+    "solution": "Now we have to condition our probability on the fact that the positions of the \ntwo bullets are consecutive. As shown in Figure 4.3, let's label the empty chambers as 1, \n2,  3 and 4;  label the ones with bullets 5 and 6.  Since your opponent survived the first \nround, the possible position he encountered is  1, 2, 3 or 4 with equal probability. With \n$\\frac{1}{4}$ chance, the next one is a bullet (the position was 4). So if you don't spin, the chance \nof survival is  $\\frac{3}{4}$. If you  spin the barrel,  each position has equal probability of being \nchosen, and your chance of survival is only $\\frac{2}{3}$. So you should not spin the barrel. \n\n0) \nFigure 4.3 Russian roulette with two consecutive bullets.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": "/images/figure_4_3.png"
+  },
+  {
+    "id": "prob_24",
+    "title": "Aces",
+    "problem_text": "Fifty-two cards are randomly distributed to 4 players with each player getting 13 cards. \nWhat is the probability that each of them will have an ace?",
+    "solution": "We want to find the probability that each of the 4 players receives exactly one Ace.\n\nLet's distribute the Aces one by one.\n1. The **First Ace** can go anywhere. It falls into some player's hand (say Player A). This happens with probability 1.\n   Remaining cards: 51. Cards not belonging to Player A: $51 - 12 = 39$.\n\n2. The **Second Ace** must go to a different player (Player B, C, or D). The number of such slots is 39.\n   $$ P(\\text{2nd different}) = \\frac{39}{51} $$\n   Remaining cards: 50. Cards belonging to Player C or D: 26.\n\n3. The **Third Ace** must go to a different player than the first two (Player C or D). The number of such slots is 26.\n   $$ P(\\text{3rd different}) = \\frac{26}{50} $$\n   Remaining cards: 49. Cards belonging to Player D: 13.\n\n4. The **Fourth Ace** must go to the last remaining player (Player D). The number of such slots is 13.\n   $$ P(\\text{4th different}) = \\frac{13}{49} $$\n\nTotal Probability:\n$$ P = 1 \\times \\frac{39}{51} \\times \\frac{26}{50} \\times \\frac{13}{49} $$\n\n$$ P = \\frac{13182}{124950} \\approx 0.105 $$\n\nSo there is roughly a **10.5%** chance that each player gets an Ace.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_25",
+    "title": "Gambler's ruin problem",
+    "problem_text": "A gambler starts with an initial fortune of $i$ dollars. On each successive game, the gambler wins $1$ with probability $p$ ($0 < p < 1$), or loses $1$ with probability $q = 1-p$. He will stop if he either accumulates $N$ dollars or loses all his money. What is the probability that he will end up with $N$ dollars?",
+    "solution": "Let $P_i$ be the probability of reaching $N$ dollars starting from $i$ dollars.\nBoundary conditions:\n$$ P_0 = 0 \\quad (\\text{Ruined}) $$\n$$ P_N = 1 \\quad (\\text{Success}) $$\n\nFor $0 < i < N$, considering one step:\n$$ P_i = p P_{i+1} + q P_{i-1} $$\n\nUsing $p+q=1$, we rearrange:\n$$ p(P_{i+1} - P_i) = q(P_i - P_{i-1}) \\implies P_{i+1} - P_i = \\frac{q}{p} (P_i - P_{i-1}) $$\n\nThis is a geometric progression for the differences. Let $r = \\frac{q}{p}$.\n$$ P_i - P_{i-1} = r^{i-1} P_1 $$\n\nSumming differences:\n$$ P_i = P_1 \\sum_{k=0}^{i-1} r^k $$\n\n**Case 1:** $p \\neq q \\implies r \\neq 1$.\nSum of geometric series:\n$$ P_i = P_1 \\frac{1-r^i}{1-r} $$\nUsing $P_N = 1$:\n$$ P_1 = \\frac{1-r}{1-r^N} $$\nSolution:\n$$ P_i = \\frac{1-r^i}{1-r^N} = \\frac{1 - (\\frac{q}{p})^i}{1 - (\\frac{q}{p})^N} $$\n\n**Case 2:** $p = q = 0.5 \\implies r = 1$.\nSum is just $i$:\n$$ P_i = P_1 \\cdot i $$\nUsing $P_N = 1 \\implies P_1 = 1/N$:\n$$ P_i = \\frac{i}{N} $$",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_26",
+    "title": "Basketball scores",
+    "problem_text": "A basketball player is  taking  100 free  throws.  She scores one point  if the ball passes \nthrough the  hoop and zero  point if she misses.  She  has  scored on her first  throw and \nmissed on her second. For each of the following throw the probability of her scoring is \nthe fraction of throws she has made so far.  For example, if she has scored 23 points after \nthe 40th throw, the probability that she will score in the 41 th throw is $\\frac{23}{40}$. After 100 \nthrows (including the first and the second), what is the probability that she scores exactly \n50 baskets?",
+    "solution": "This problem is equivalent to the **Polya Urn Model**.\nWe start with 1 Score (Red ball) and 1 Miss (Blue ball). Total = 2.\nAt each step, the probability of scoring (adding a Red ball) is proportional to the number of Red balls currently in the urn.\n\nA key property of the Polya Urn model with initial composition $(1, 1)$ is that after $N$ total balls (here $N=100$ throws), the number of Red balls is **Uniformly Distributed** on the set $\\{1, 2, ..., N-1\\}$.\n\nThere are $N-1 = 99$ possible values for the total number of scores (from 1 to 99, since we can't have 0 or 100 due to the initial throws).\n\nSince the distribution is uniform, every outcome has probability:\n$$ P = \\frac{1}{99} $$",
+    "hint": "Think about small numbers. If you throw 3 times (start with 1 score, 1 miss), what are the probs of 1 vs 2 scores?",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_27",
+    "title": "Cars on road",
+    "problem_text": "If the probability of observing at least one car on a highway during any 20-minute time \ninterval is $\\frac{609}{625}$, then what is the probability of observing at least one car during any \n5-minute time interval?  Assume that the probability of seeing a car at any moment is \nuniform (constant) for the entire 20 minutes.",
+    "solution": "Let's work with the probability of seeing **zero** cars, as this allows us to use the independence of non-overlapping intervals.\n\nLet $q_{20}$ be the probability of seeing zero cars in 20 minutes.\nSince $P(\\text{at least one}) = \\frac{609}{625}$, we have:\n$$ q_{20} = 1 - \\frac{609}{625} = \\frac{16}{625} $$\n\nA 20-minute interval is composed of four 5-minute intervals. Let $q_5$ be the probability of seeing zero cars in a 5-minute interval.\nAssuming independence (standard for such problems), the probability of seeing zero cars in 20 minutes is the probability of seeing zero cars in *each* of the four 5-minute intervals multiplied together:\n$$ (q_5)^4 = q_{20} = \\frac{16}{625} $$\n\nSolving for $q_5$:\n$$ q_5 = \\sqrt[4]{\\frac{16}{625}} = \\frac{2}{5} $$\n\nThis is the probability of seeing *zero* cars in 5 minutes. The question asks for the probability of seeing **at least one** car:\n$$ P(\\text{>= 1 in 5}) = 1 - q_5 = 1 - \\frac{2}{5} = \\frac{3}{5} $$\n\n**Verification:**\nIf the probability of at least one car in 5 mins is $3/5$, then the prob of no cars is $2/5$.\nProb of no cars in 20 mins = $(2/5)^4 = 16/625$.\nProb of at least one in 20 mins = $1 - 16/625 = 609/625$. Matches given data.\n\nAnswer: **3/5**.",
+    "hint": null,
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_28",
+    "title": "Meeting probability",
+    "problem_text": "Two bankers each arrive at the station at some random time between 5:00 am and 6:00 \nam  (arrival  time  for  either  banker  is  uniformly  distributed).  They  stay  exactly  five \nminutes and then leave. What is the probability they will meet on a given day?",
+    "solution": "This is a **Geometric Probability** problem. Let $x$ and $y$ be the arrival times of the two bankers, measured in minutes from 5:00 am.\nBoth $x$ and $y$ are uniformly distributed in $[0, 60]$.\nThe sample space is a square of side 60 in the $xy$-plane.\n$$ \\text{Total Area} = 60 \\times 60 = 3600 $$\n\nThey meet if their arrival times are within 5 minutes of each other:\n$$ |x - y| \\le 5 $$\nThis region is the strip along the diagonal $y=x$.\n\nIt is easier to calculate the area of the **complement** (they do *not* meet):\n$$ |x - y| > 5 \\implies x - y > 5 \\text{ or } y - x > 5 $$\nThese correspond to two disjoint triangles at the corners of the square. Each triangle has side length $60 - 5 = 55$.\n\n$$ \\text{Area of Complement} = 55^2 = 3025 $$\nSo the area of the meeting region is:\n$$ \\text{Area of Meeting} = 3600 - 3025 = 575 $$\n\nThe probability is:\n$$ P = \\frac{575}{3600} = \\frac{23}{144} \\approx 16\\% $$",
+    "hint": "Visualize the sample space as a 60x60 square. The condition |x-y| <= 5 is a strip along the diagonal.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_29",
+    "title": "Probability of triangle",
+    "problem_text": "A stick is cut twice randomly (each cut point follows a uniform distribution on the stick), what is the probability that the 3 segments can form a triangle?",
+    "solution": "Let the stick length be 1. Let the cut points be $x$ and $y$. The lengths of the three segments are determined by the positions of $x$ and $y$.\nAssuming $x < y$, the segments are $x$, $y-x$, and $1-y$.\nTriangle Inequality requires the sum of any two sides to be greater than the third:\n1. $x + (y-x) > 1-y \\implies y > 0.5$\n2. $x + (1-y) > y-x \\implies y < x + 0.5$\n3. $(y-x) + (1-y) > x \\implies x < 0.5$\n\nThese conditions define a region in the $x < y$ triangle of the unit square. The area of this region is $1/8$.\nBy symmetry (for $y < x$), there is another region of area $1/8$.\nTotal favorable area = $1/8 + 1/8 = 1/4$.\nTotal sample space area = $1$.\n\nProbability = **1/4**.",
+    "hint": "Use the unit square to represent choices of x and y. Triangle inequalities cut out the favorable region.",
+    "chapter": "Probability",
+    "graph_url": "/images/figure_4_5.png"
+  },
+  {
+    "id": "prob_30",
+    "title": "Property of Poisson process",
+    "problem_text": "You are waiting for a bus at a bus station. The buses arrive according to a Poisson process with an average arrival rate of $\\lambda = 0.1$ per minute (10 mins avg). You arrive at a random time. What is your expected waiting time? On average, how many minutes ago did the last bus leave?",
+    "solution": "This problem relies on the **Memoryless Property** of the Exponential Distribution.\nSince bus arrivals follow a Poisson process, the inter-arrival times are exponentially distributed with mean $1/\\lambda = 10$ minutes.\n\n1. **Expected Waiting Time**: Due to the memoryless property, the distribution of the time you have to wait *from the moment you arrive* is the same as the original distribution. Thus, the expected waiting time is still **10 minutes**.\n\n2. **Time Since Last Bus**: This refers to the 'age' of the current renewal interval. For a Poisson process, looking backward in time is symmetric to looking forward. The expected time elapsed since the last bus is also **10 minutes**.\n\nParadox: This implies the average interval length containing your arrival is $10 + 10 = 20$ minutes, which is double the average inter-arrival time. This is known as the **Inspection Paradox**: your random arrival is more likely to fall into a longer interval than a shorter one.",
+    "hint": "Exponential distribution is memoryless. The past does not affect the future.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_31",
+    "title": "Moments of normal distribution",
+    "problem_text": "If $X$ follows a standard normal distribution ( $X \\sim N(0, 1)$ ), what is $E[X^n]$ for $n = 1, 2, 3$ and $4$?",
+    "solution": "1. **First Moment** ($n=1$): The standard normal PDF $f(x)$ is even. $x f(x)$ is odd.\n$$ E[X] = \\int_{-\\infty}^{\\infty} x f(x) dx = 0 $$\n\n2. **Second Moment** ($n=2$): This is the variance.\n$$ E[X^2] = \\text{Var}(X) + (E[X])^2 = 1 + 0 = 1 $$\nAlternatively, using integration by parts on $\\int x^2 e^{-x^2/2} dx$, we get 1.\n\n3. **Third Moment** ($n=3$): $x^3 f(x)$ is an odd function.\n$$ E[X^3] = 0 $$\n\n4. **Fourth Moment** ($n=4$): This relates to Kurtosis (which is 3 for Normal).\n$$ E[X^4] = 3 $$\nGenerally, for standard normal, $E[X^n] = 0$ if $n$ is odd, and $(n-1)!!$ if $n$ is even (product of odd integers).\nFor $n=4$: $3 \\times 1 = 3$.",
+    "hint": "Think about symmetry for odd moments. For even moments, recall Variance = 1 and Kurtosis = 3.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_32",
+    "title": "Connecting noodles",
+    "problem_text": "You have 100 noodles in your soup bowl. Being blindfolded, you take two ends of some noodles and connect them. You continue until there are no free ends. Calculate the expected number of circles.",
+    "solution": "Let $E_n$ be the expected number of circles with $n$ noodles (so $2n$ ends).\nChoose one end. There are $2n-1$ other ends.\n1. If you pick the **other end of the same noodle**, you form a circle. The separate noodle becomes a loop and 'leaves' the pool. Probability $p = \\frac{1}{2n-1}$. Remaining: $n-1$ noodles.\n2. If you pick an end of a **different** noodle, you join two noodles into one longer strand. No circle is formed immediately. Probability $q = \\frac{2n-2}{2n-1}$. Remaining: effectively $n-1$ noodles (number of ends reduces by 2, number of 'strands' reduces by 1).\n\nWait, in both cases we use up 2 ends, so we go from $n$ potential strands to $n-1$ potential strands/types. Actually, if we link two different noodles, we reduce count of noodles by 1 (2 into 1). If we link same noodle, we reduce count by 1 (1 into loop).\nSo in step 1, we get 1 circle + expected circles from $n-1$ noodles.\nIn step 2, we get 0 circles + expected circles from $n-1$ noodles.\n\n$$ E_n = \\frac{1}{2n-1}(1 + E_{n-1}) + \\frac{2n-2}{2n-1}(0 + E_{n-1}) $$\n$$ E_n = \\frac{1}{2n-1} + E_{n-1} $$\n\nBase case: $E_1 = 1/1 = 1$.\nSolution is the sum of harmonic-like terms:\n$$ E_{100} = \\sum_{k=1}^{100} \\frac{1}{2k-1} = 1 + \\frac{1}{3} + \\frac{1}{5} + ... + \\frac{1}{199} $$\n\nThis sum can be approximated as $\\frac{1}{2} \\ln(2n)$.",
+    "hint": "Use induction. Pick an end, conditional expectation based on whether the match forms a loop.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_33",
+    "title": "Optimal hedge ratio",
+    "problem_text": "You just bought one share of stock A and want to hedge it by shorting stock B. How many shares of B should you short to minimize the variance of the hedged position? Assume variance of A is $\\sigma_A^2$, variance of B is $\\sigma_B^2$, and correlation is $\\rho$.",
+    "solution": "Let $h$ be the number of shares of B we short.\nThe portfolio return is $R_P = R_A - h R_B$.\nThe variance is:\n$$ \\text{Var}(R_P) = \\sigma_A^2 + h^2 \\sigma_B^2 - 2h \\text{Cov}(R_A, R_B) $$\n$$ \\text{Var}(R_P) = \\sigma_A^2 + h^2 \\sigma_B^2 - 2h \\rho \\sigma_A \\sigma_B $$\n\nTo minimize variance, take the derivative with respect to $h$ and set to 0:\n$$ \\frac{d}{dh} \\text{Var} = 2h \\sigma_B^2 - 2 \\rho \\sigma_A \\sigma_B = 0 $$\n$$ h \\sigma_B^2 = \\rho \\sigma_A \\sigma_B $$\n$$ h = \\rho \\frac{\\sigma_A}{\\sigma_B} $$\n\nThis is the optimal **Hedge Ratio**.",
+    "hint": "Write variance of (A - hB). Differentiate wrt h.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_34",
+    "title": "Dice game",
+    "problem_text": "You roll a die. You are paid the face value. If you roll 4, 5, or 6, you can roll again (recursively). If you roll 1, 2, or 3, the game stops. What is the expected payoff?",
+    "solution": "Let $E$ be the expected payoff.\nWe can use the Law of Total Expectation conditioned on the first roll ($X_1$).\nPossible outcomes:\n- 1, 2, 3 (Prob 1/2): Payoff is the value. Stop.\n- 4, 5, 6 (Prob 1/2): Payoff is the value + Expectation of new game ($E$).\n\nExpected value of {1, 2, 3} is 2.\nExpected value of {4, 5, 6} is 5.\n\n$$ E = \\frac{1}{2}(2) + \\frac{1}{2}(5 + E) $$\n$$ E = 1 + 2.5 + 0.5 E = 3.5 + 0.5 E $$\n$$ 0.5 E = 3.5 \\implies E = 7 $$\n\nExpected payoff is **7**.",
+    "hint": "E = (Avg of 1,2,3)*0.5 + (Avg of 4,5,6 + E)*0.5",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_35",
+    "title": "Card game",
+    "problem_text": "What is the expected number of cards that need to be turned over in a regular 52-card deck in order to see the first ace?",
+    "solution": "Let the 4 Aces divide the remaining 48 non-Ace cards into 5 regions ($X_1, X_2, X_3, X_4, X_5$).\n\n$$ \\underbrace{X_1}_{\\text{Region 1}} A_1 \\underbrace{X_2}_{\\text{Region 2}} A_2 \\underbrace{X_3}_{\\text{Region 3}} A_3 \\underbrace{X_4}_{\\text{Region 4}} A_4 \\underbrace{X_5}_{\\text{Region 5}} $$\n\nBy symmetry, the 48 non-Ace cards are uniformly distributed among these 5 regions. Thus, the expected number of cards in each region is equal:\n$$ \\mathbb{E}[X_1] = \\mathbb{E}[X_2] = \\dots = \\mathbb{E}[X_5] = \\frac{48}{5} = 9.6 $$\n\nThe number of cards required to see the first Ace is the number of cards in the first region ($X_1$) plus the first Ace itself:\n$$ \\mathbb{E}[N] = \\mathbb{E}[X_1] + 1 = 9.6 + 1 = 10.6 $$\n\nAnswer: **10.6**.",
+    "hint": "The 4 aces create 5 buckets for the non-ace cards.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_36",
+    "title": "Sum of random variables",
+    "problem_text": "Assume that $X_1, X_2, ..., X_n$ are independent and identically distributed (IID) random variables with uniform distribution on $[0,1]$. What is the probability that $S_n = X_1 + ... + X_n \\le 1$?",
+    "solution": "**Method of Induction / Geometry:**\n- $n=1$: $P(X_1 \\le 1) = 1 = 1/1!$.\n- $n=2$: The region $x_1 + x_2 \\le 1$ inside the unit square is a triangle of area $1/2 = 1/2!$.\n- $n=3$: The region $x_1 + x_2 + x_3 \\le 1$ inside the unit cube is a tetrahedron of volume $1/6 = 1/3!$.\n\nGeneralizing, the volume of the simplex defined by $\\sum x_i \\le 1, x_i \\ge 0$ is given by:\n$$ P(S_n \\le 1) = \\frac{1}{n!} $$",
+    "hint": "Think about volume of a simplex.",
+    "chapter": "Probability",
+    "graph_url": "/images/figure_4_6.png"
+  },
+  {
+    "id": "prob_37",
+    "title": "Coupon collection",
+    "problem_text": "There are $N$ distinct types of coupons. Each box contains one coupon, equally likely to be of any type. \nA. How many boxes on average are needed to collect all $N$ types?\nB. If you have collected $n$ coupons, what is the expected number of distinct types?",
+    "solution": "**Part A:**\nLet $X_i$ be the number of additional boxes needed to get the $i$-th new coupon type after having $i-1$ types.\nProbability of finding a new type given $i-1$ types are held is $p_i = \\frac{N-(i-1)}{N}$.\n$X_i$ follows a Geometric Distribution with parameter $p_i$. Expected value is $1/p_i = \\frac{N}{N-i+1}$.\nTotal Expected Boxes:\n$$ E[X] = \\sum_{i=1}^N E[X_i] = \\sum_{i=1}^N \\frac{N}{N-i+1} = N \\sum_{k=1}^N \\frac{1}{k} $$\nThis is $N$ times the Harmonic Number $H_N$.\n\n**Part B:**\nLet $I_j$ be an indicator variable that the $j$-th coupon type is *present* in the set of $n$ coupons.\nProbability type $j$ is MISSING in one trial is $\\frac{N-1}{N}$.\nProbability type $j$ is MISSING in $n$ trials is $(\\frac{N-1}{N})^n$.\nProbability type $j$ is PRESENT is $1 - (\\frac{N-1}{N})^n$.\nBy linearity of expectation:\n$$ E[\\text{Distinct Types}] = \\sum_{j=1}^N E[I_j] = N \\left( 1 - \\left( \\frac{N-1}{N} \\right)^n \\right) $$",
+    "hint": "Sum of geometric variables. Linearity of expectation with indicators.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_38",
+    "title": "Joint default probability",
+    "problem_text": "If there is a 50% probability that Bond A defaults and 30% that Bond B defaults. What is the range of the probability that at least one bond defaults? What is the range of their correlation?",
+    "solution": "Let $P(A) = 0.5$ and $P(B) = 0.3$.\nWe want the range of $P(A \\cup B)$.\nUsing Inclusion-Exclusion:\n$$ P(A \\cup B) = P(A) + P(B) - P(A \\cap B) = 0.8 - P(A \\cap B) $$\n\n**Bounds on Union**:\n1. Maximum Union (Minimum Intersection): If events are disjoint (or as disjoint as possible).\n   $P(A \\cap B) \\ge 0$ (actually $P(A \\cap B) \\ge P(A)+P(B)-1$, here $0.8-1 < 0$).\n   So Min Intersection = 0. Then Max Union = $0.8$.\n2. Minimum Union (Maximum Intersection): One event implies the other.\n   $P(A \\cap B) \\le \\min(P(A), P(B)) = 0.3$.\n   So Max Intersection = 0.3. Then Min Union = $0.8 - 0.3 = 0.5$.\n**Range of Prob**: $[0.5, 0.8]$.\n\n**Range of Correlation**:\n$\\rho = \\frac{E[I_A I_B] - E[I_A]E[I_B]}{\\sigma_A \\sigma_B}$.\n$E[I_A] = 0.5$, $\\sigma_A = \\sqrt{0.5 \\times 0.5} = 0.5$.\n$E[I_B] = 0.3$, $\\sigma_B = \\sqrt{0.3 \\times 0.7} = \\sqrt{0.21}$.\n$E[I_A I_B] = P(A \\cap B)$.\n\n- Max Corr (Max Intersection $0.3$): $\\rho = \\frac{0.3 - 0.15}{0.5 \\sqrt{0.21}} = \\frac{0.15}{0.5 \\times 0.458} \\approx \\mathbf{0.65}$.\n- Min Corr (Min Intersection $0$): $\\rho = \\frac{0 - 0.15}{0.5 \\sqrt{0.21}} = \\frac{-0.15}{0.229} \\approx \\mathbf{-0.65}$.\n\nRange: approx $[-0.65, 0.65]$.",
+    "hint": "Use Fréchet bounds for probability. Use correlation definition.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_39",
+    "title": "Order Statistics (Max and Min)",
+    "problem_text": "Let $X_1, ..., X_n$ be IID random variables with Uniform distribution on $[0,1]$.\nFind the PDF and Expected Value of $Z_n = \\max(X_1, ..., X_n)$ and $Y_n = \\min(X_1, ..., X_n)$.",
+    "solution": "**Maximum** $Z_n$:\nCDF: $P(Z_n \\le x) = P(X_1 \\le x)^n = x^n$.\nPDF: $f_Z(x) = n x^{n-1}$.\nExpected Value:\n$$ E[Z_n] = \\int_0^1 x (n x^{n-1}) dx = \\int_0^1 n x^n dx = \\frac{n}{n+1} $$\n\n**Minimum** $Y_n$:\nCDF: $P(Y_n > x) = P(X_1 > x)^n = (1-x)^n$.\n$P(Y_n \\le x) = 1 - (1-x)^n$.\nPDF: $f_Y(x) = n(1-x)^{n-1}$.\nExpected Value:\n$$ E[Y_n] = \\int_0^1 x n(1-x)^{n-1} dx = \\frac{1}{n+1} $$\n\nIntuitively, $n$ random points divide the interval $[0,1]$ into $n+1$ segments of equal expected length $\\frac{1}{n+1}$.\nMin is at 1st cut: $1/(n+1)$.\nMax is at $n$-th cut: $n/(n+1)$.",
+    "hint": "Use CDF definitions. Max <= x means ALL <= x. Min > x means ALL > x.",
+    "chapter": "Probability",
+    "graph_url": null
+  },
+  {
+    "id": "prob_40",
+    "title": "Correlation of max and min",
+    "problem_text": "Let $X_1, X_2$ be IID Uniform on $[0,1]$. Let $Y = \\min(X_1, X_2)$ and $Z = \\max(X_1, X_2)$.\nWhat is the correlation of $Y$ and $Z$?",
+    "solution": "We know $Y$ and $Z$ divide $[0,1]$ into 3 segments of mean length $1/3$.\n$E[Y] = 1/3, \\quad E[Z] = 2/3$.\nAlso $YZ = X_1 X_2$ (Product of numbers is same). This is a great trick!\n$$ E[YZ] = E[X_1 X_2] = E[X_1]E[X_2] = (1/2)(1/2) = 1/4 $$\n\nCovariance:\n$$ \\text{Cov}(Y, Z) = E[YZ] - E[Y]E[Z] = 1/4 - (1/3)(2/3) = 1/4 - 2/9 = \\frac{9-8}{36} = \\frac{1}{36} $$\n\nTo find correlation, we need variances.\n$f_Y(x) = 2(1-x)$. $E[Y^2] = \\int_0^1 x^2 2(1-x) dx = 2(1/3 - 1/4) = 2/12 = 1/6$.\n$\\text{Var}(Y) = 1/6 - (1/3)^2 = 1/6 - 1/9 = \\frac{3-2}{18} = 1/18$.\nBy symmetry $\\text{Var}(Z) = 1/18$.\n\nCorrelation:\n$$ \\rho = \\frac{1/36}{\\sqrt{1/18 \\times 1/18}} = \\frac{1/36}{1/18} = \\frac{18}{36} = \\frac{1}{2} $$\n\nAnswer: **0.5**.",
+    "hint": "Trick: YZ = X1*X2. Also use Var formula.",
+    "chapter": "Probability",
+    "graph_url": "/images/figure_4_7.png"
+  },
+  {
+    "id": "prob_41",
+    "title": "Random ants",
+    "problem_text": "500 ants are randomly put on 1-foot string (independent uniform distribution for each ant between 0 and 1). Each ant randomly moves toward one end of the string (equal probability to the left or right) at constant speed of 1 foot/minute. When two ants collide head-on, they both immediately change directions. What is the expected time for all ants to fall off?",
+    "solution": "When two ants collide head-on, both immediately change directions. If we exchange the ants' labels at collision, it is indistinguishable from them passing through each other. So we can assume that when two ants meet, each just keeps on going in its original direction.\n\nAfter removing collisions, the problem is equivalent to finding the expected time for the last of 500 independent ants to fall off. The time an ant stays on the string is equivalent to a random variable uniformly distributed between 0 and 1 (distance to end / speed 1).\n\nSo the problem reduces to finding the expected value of the maximum of 500 IID random variables with uniform distribution on $[0, 1]$.\n\nFor $n$ IID uniform variables on $[0, 1]$, the expected maximum is $\\frac{n}{n+1}$.\n\n$$ E[T] = \\frac{500}{501} \\text{ min} $$",
+    "hint": "If we switch the label of two ants that collide with each other, it's like that  the collision never \nhappened.",
+    "chapter": "Probability",
+    "graph_url": null
+  }
+]
