@@ -19,6 +19,7 @@ interface QuestionCardProps {
     isJudging: boolean;
     showHint: boolean;
     setShowHint: (show: boolean) => void;
+    onJudgeSubmit?: () => void;
 }
 
 export default function QuestionCard({
@@ -31,7 +32,8 @@ export default function QuestionCard({
     handleSubmit,
     isJudging,
     showHint,
-    setShowHint
+    setShowHint,
+    onJudgeSubmit
 }: QuestionCardProps) {
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -138,6 +140,7 @@ export default function QuestionCard({
 
         setChatHistory(updatedHistory);
         setUserAnswer(""); // Clear input after submit
+        if (onJudgeSubmit) onJudgeSubmit();
 
         try {
             const response = await fetch("/api/judge", {
